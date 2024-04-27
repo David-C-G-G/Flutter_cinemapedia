@@ -1,0 +1,4 @@
+/*
+dentro de esta carpeta iran todas las reglas que tendrá la aplicación
+también el tipo de clase o la entidad que se usará en la aplicación
+*/
