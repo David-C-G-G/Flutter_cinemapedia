@@ -1,0 +1,5 @@
+//aqui básicamente iria todo el código que se usa de parte de cada API
+por ejemplo:
+-si quiero usar algo de CUEVANA entonces aqui es donde hago el código para manejar su API
+para este caso haremos un código que permita ser el intermediario entre comunicación de la API themoviedb
+en otras palabras aqui se implementan las clases abstractas de la infraestructura.
