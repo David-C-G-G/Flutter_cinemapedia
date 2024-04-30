@@ -44,6 +44,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    
+    final initialLoading = ref.watch(initialLoadingProvider);
+    if( initialLoading ) return const FullScreenLoader();
 
     final slideShowMovies = ref.watch( moviesSlideShowProvider );
     final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
@@ -55,6 +58,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     // return SingleChildScrollView( //esta opcion es buena si solo quieres deslizar 
     // );
+
     return CustomScrollView( //esta opcion es parecida al singlechildscrollview pero mas personalizado
       slivers: [
 
