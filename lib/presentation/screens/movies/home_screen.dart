@@ -37,37 +37,101 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.initState();
 
     ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+    ref.read( popularMoviesProvider.notifier ).loadNextPage();
+    ref.read( upcomingMoviesProvider.notifier ).loadNextPage();
+    ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    // final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
     final slideShowMovies = ref.watch( moviesSlideShowProvider );
+    final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
+    final popularMovies = ref.watch( popularMoviesProvider );
+    final upcomingMovies = ref.watch( upcomingMoviesProvider );
+    final topRatedMovies = ref.watch( topRatedMoviesProvider );
 
     // if ( movies.length == 0 ) return CircularProgressIndicator();
 
-    return Column(
-      children: [
+    // return SingleChildScrollView( //esta opcion es buena si solo quieres deslizar 
+    // );
+    return CustomScrollView( //esta opcion es parecida al singlechildscrollview pero mas personalizado
+      slivers: [
 
-        const CustomAppbar(),
-
-        MoviesSlideShow(
-          movie: slideShowMovies
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            titlePadding: EdgeInsets.symmetric(),
+            title: CustomAppbar(),
+          ),
         ),
 
 
-        // Expanded(
-        //   child: ListView.builder(
-        //     itemCount: nowPlayingMovies.length,
-        //     itemBuilder: (context, index) {
-        //       final movie = nowPlayingMovies[index];
-        //       return ListTile(
-        //         title: Text( movie.title ),
-        //       );
-        //     },
-        //   ),
-        // )
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return Column(
+                children: [
+              
+                  // const CustomAppbar(),
+              
+                  MoviesSlideShow(
+                    movie: slideShowMovies
+                  ),
+              
+                  MoviesHorizontalListview(
+                    movies: nowPlayingMovies,
+                    title: 'En cines',
+                    subTitle: 'Lunes 29',
+                    loadNextPage: () {
+                      ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                    },
+                  ),
+
+
+                  MoviesHorizontalListview(
+                    movies: upcomingMovies,
+                    title: 'Proximamente',
+                    subTitle: 'Estrenos',
+                    loadNextPage: () => ref.read(upcomingMoviesProvider.notifier).loadNextPage()
+                  ),
+
+
+                  MoviesHorizontalListview(
+                    movies: popularMovies,
+                    title: 'Populares',
+                    subTitle: 'Mas vistos',
+                    loadNextPage: () => ref.read(popularMoviesProvider.notifier).loadNextPage()
+                  ),
+
+
+                  MoviesHorizontalListview(
+                    movies: topRatedMovies,
+                    title: 'Mejor Calificadas',
+                    subTitle: 'Este mes',
+                    loadNextPage: () => ref.read(topRatedMoviesProvider.notifier).loadNextPage()
+                  ),
+              
+              
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //     itemCount: nowPlayingMovies.length,
+                  //     itemBuilder: (context, index) {
+                  //       final movie = nowPlayingMovies[index];
+                  //       return ListTile(
+                  //         title: Text( movie.title ),
+                  //       );
+                  //     },
+                  //   ),
+                  // )
+                ],
+              );
+            },
+            childCount: 1,
+          ),
+        )
+
+
       ],
     );
   }
