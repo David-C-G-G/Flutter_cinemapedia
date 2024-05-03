@@ -1,6 +1,7 @@
 //aqui es donde se instalo desde pusbect la librería "dio"
 //para hacer peticiones http.
 
+import 'package:cinemapedia/infrastructure/models/moviedb/movie_details.dart';
 import 'package:dio/dio.dart';
 
 import 'package:cinemapedia/config/constants/environment.dart';
@@ -44,21 +45,6 @@ class MoviedbDatasource extends MoviesDataSource{ //cliente de peticiones http
     }
     );
 
-    // final movieDBResponse = MovieDbResponse.fromJson(response.data);
-
-    // final List<Movie> movies = movieDBResponse.results
-    // .where((movieDB) => movieDB.posterPath != 'no poster')
-    // .map(
-    //   (movieDB) => MovieMapper.movieDBToEntity(movieDB)
-    // ).toList();
-
-    // //podria usarse las lineas de arriba como
-    // // return movies = movieDBResponse.results.map(
-    // //   (movieDB) => MovieMapper.movieDBToEntity(movieDB)
-    // // ).toList();
-    
-    // return movies;
-
     return _jsonToMovies(response.data);
   }
   
@@ -93,6 +79,18 @@ class MoviedbDatasource extends MoviesDataSource{ //cliente de peticiones http
 
     return _jsonToMovies(response.data);
   }
+  
+  @override
+  Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
+    if( response.statusCode != 200 ) throw Exception('Movie with id: $id not found');
+    
+    final movieDetails = MovieDetails.fromJson( response.data );
+    final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
+
+    return movie;
+  }
+  
 
 
 }

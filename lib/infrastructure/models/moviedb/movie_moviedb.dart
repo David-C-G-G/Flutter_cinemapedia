@@ -67,29 +67,3 @@ class MovieFromMovieDB {
         "vote_count": voteCount,
     };
 }
-
-// enum OriginalLanguage {
-//     EN,
-//     FR,
-//     IT,
-//     KO
-// }
-
-// final originalLanguageValues = EnumValues({
-//     "en": OriginalLanguage.EN,
-//     "fr": OriginalLanguage.FR,
-//     "it": OriginalLanguage.IT,
-//     "ko": OriginalLanguage.KO
-// });
-
-// class EnumValues<T> {
-//     Map<String, T> map;
-//     late Map<T, String> reverseMap;
-
-//     EnumValues(this.map);
-
-//     Map<T, String> get reverse {
-//         reverseMap = map.map((k, v) => MapEntry(v, k));
-//         return reverseMap;
-//     }
-// }

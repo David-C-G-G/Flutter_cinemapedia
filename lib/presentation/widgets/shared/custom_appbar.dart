@@ -22,7 +22,7 @@ class CustomAppbar extends StatelessWidget {
               Text('CinemaPedia', style: titleStyle,),
               const Spacer(),
               IconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 onPressed: (){}, 
               )
             ],
